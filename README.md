@@ -1,2 +1,2 @@
 Tic-Tac-Teo-Game
-https://xo-game-b9876.web.app
+https://tic-tac-teo-game-e046a.web.app
