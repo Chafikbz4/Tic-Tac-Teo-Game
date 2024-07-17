@@ -1,0 +1,151 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 20px;
+}
+
+.score {
+    font-size: 24px;
+    margin: 0 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    grid-gap: 0;
+}
+
+.btn {
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    border: 2px solid #000;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.btn:hover {
+    background-color: #b8b3b386;
+}
+.btn:disabled {
+    cursor: not-allowed;
+}
+.winner {
+    background-color: #b8b3b386;
+    color: #fff;
+}
+
+#notop-left {
+    border-top: none;
+    border-left: none;
+}
+
+#notop {
+    border-top: none;
+}
+
+#notop-right {
+    border-top: none;
+    border-right: none;
+}
+
+#noleft {
+    border-left: none;
+}
+
+#noright {
+    border-right: none;
+}
+
+#nobut-left {
+    border-bottom: none;
+    border-left: none;
+}
+
+#nobut {
+    border-bottom: none;
+}
+
+#nobut-right {
+    border-bottom: none;
+    border-right: none;
+}
+.modul {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    pointer-events: all;
+    text-align: center;
+}
+.box {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+.hide{
+    display: none;
+}
+#yes{
+    width: 100%;
+
+}
+#no{
+    width: 100%;
+}
+
+button#yes, button#no {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+button#no {
+    background-color: #f44336; 
+}
+
+button#yes:hover, button#no:hover {
+    background-color: #45a049;
+}
+
+button#no:hover {
+    background-color: #d32f2f;
+}

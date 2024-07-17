@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tic-Tac-Toe Game</h1>
+        <div class="modul hide">
+            <h1>Do you want to play again </h1>
+            <div class="box">
+            <button id="yes">yes</button>
+            <a href="../index.html"><button id="no">No</button><a></a>
+            </div>
+        </div>
+        <div class="scoreboard">
+            <p class="score" id="score-x">X: 0</p>
+            <p class="score" id="score-o">O: 0</p>
+        </div>
+        <div class="grid">
+            <button class="btn" id="notop-left"></button>
+            <button class="btn" id="notop"></button>
+            <button class="btn" id="notop-right"></button>
+            <button class="btn" id="noleft"></button>
+            <button class="btn"></button>
+            <button class="btn" id="noright"></button>
+            <button class="btn" id="nobut-left"></button>
+            <button class="btn" id="nobut"></button>
+            <button class="btn" id="nobut-right"></button>
+        </div>
+    </div>
+
+    <script>
+        let btns = document.querySelectorAll(".btn");
+        let turn = 0; 
+        let scoreO = 0;
+        let scoreX = 0;
+        let PlayAgain = document.getElementById("yes");
+        let Back = document.getElementById("no");
+        let hide = document.querySelector(".modul");
+
+        let play = function(btns) {
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].addEventListener('click', function() {
+                    if (btns[i].innerText === "") { 
+                        btns[i].innerText = "X";
+                        btns[i].classList.add("disabled"); 
+                        turn++; // 
+
+                        let winner = checkWinner();
+                        if (winner) {
+                            if (winner.player === "X") {
+                                scoreX++;
+                                document.getElementById('score-x').innerText = `X: ${scoreX}`;
+                            } else {
+                                scoreO++;
+                                document.getElementById('score-o').innerText = `O: ${scoreO}`;
+                            }
+                            highlightWinner(winner.combination);
+                        } else if (turn === 9) {
+                            // All buttons are filled and there's no winner
+                            showDraw();
+                        } else {
+                            // Computer's turn
+                            setTimeout(computerMove, 500);
+                        }
+                    }
+                });
+            }
+        };
+
+        let computerMove = function() {
+            let emptyCells = [];
+            for (let i = 0; i < btns.length; i++) {
+                if (btns[i].innerText === "") {
+                    emptyCells.push(i);
+                }
+            }
+            let randomIndex = Math.floor(Math.random() * emptyCells.length);
+            let computerChoice = emptyCells[randomIndex];
+            btns[computerChoice].innerText = "O";
+            btns[computerChoice].classList.add("disabled");
+
+            turn++; // Increment turn counter
+
+            let winner = checkWinner();
+            if (winner) {
+                if (winner.player === "X") {
+                    scoreX++;
+                    document.getElementById('score-x').innerText = `X: ${scoreX}`;
+                } else {
+                    scoreO++;
+                    document.getElementById('score-o').innerText = `O: ${scoreO}`;
+                }
+                highlightWinner(winner.combination);
+            } else if (turn === 9) {
+                // All buttons are filled and there's no winner
+                showDraw();
+            }
+        }
+
+        let checkWinner = function() {
+            // Define winning combinations
+            const winCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            for (let combination of winCombinations) {
+                const [a, b, c] = combination;
+                if (btns[a].innerText !== "" && btns[a].innerText === btns[b].innerText && btns[a].innerText === btns[c].innerText) {
+                    return { player: btns[a].innerText, combination }; // Return "X" or "O" and the winning combination
+                }
+            }
+            return null;
+        }
+
+        let highlightWinner = function(combination) {
+            for (let i = 0; i < btns.length; i++) {
+                if (!combination.includes(i)) {
+                    btns[i].classList.add("disabled"); // Disable all buttons except the winning ones
+                }
+            }
+            for (let index of combination) {
+                btns[index].classList.add("winner");
+            }
+            again();
+        }
+
+        let showDraw = function() {
+            hide.querySelector("h1").innerText = "It's a draw! Do you want to play again?";
+            hide.classList.remove("hide");
+            PlayAgain.onclick = function() {
+                hide.classList.add("hide");
+                resetGame();
+            }
+        }
+
+        let again = function() {
+            hide.querySelector("h1").innerText = "Do you want to play again?";
+            hide.classList.remove("hide");
+            PlayAgain.onclick = function() {
+                hide.classList.add("hide");
+                resetGame();
+            }
+        }
+
+        let resetGame = function() {
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].innerText = "";
+                btns[i].classList.remove("winner", "disabled");
+            }
+            turn = 0;
+        }
+
+        play(btns);
+    </script>
+</body>
+</html>
